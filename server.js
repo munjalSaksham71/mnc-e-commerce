@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
@@ -42,6 +44,17 @@ app.get('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
+});
+
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(
+      `Port ${PORT} is in use. Stop the other process (lsof -ti :${PORT} | xargs kill -9) or set PORT=5001 in .env`
+    );
+  } else {
+    console.error(error);
+  }
+  process.exit(1);
 });
