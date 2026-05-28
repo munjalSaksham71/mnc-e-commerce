@@ -5,12 +5,12 @@ import img from '../../assets/crown.svg';
 
 const StripeCheckoutButton = ({price}) => {
     const priceforstripe = price *100;
-    const publishablekey = 'pk_test_51JNCAuSErOfQpw9hJyBbhl5jDwGZHMgNiEY22vvM2HzKMzPRq91TR86azQqs2PIXanQmA8Ijxa0Lz2lSns6ikqMY00hExd2b1w';
+    const publishablekey = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
 
     const onToken = token => {
         axios({
             url: 'payment',
-            mathod: 'post',
+            method: 'post',
             data: {
                 amount: priceforstripe,
                 token
